@@ -30,14 +30,15 @@ def connect():
     data = sales.get_all_values()
     prices=pr.get_all_values()
     discounts=ds.get_all_values()
-    print(data)
-    print(discounts)
-    print(prices)
+    #print(data)
+    #print(discounts)
+    #print(prices)
 
 
-def insert_row(data,worksheet):
-    wsheet=SHEET.worksheet(worksheet)
-    wsheet.append_row(data)
+def insert_row(dataI,worksheet):
+
+    wsheet1=SHEET.worksheet(worksheet)
+    wsheet1.append_row(dataI)
     print(f" New row inserted in {worksheet}!!")
 
 
@@ -60,9 +61,24 @@ def max_demand(data):
         if index==indexMax:
             for jindex,col in enumerate(row):
                 if jindex>0:
-                    newRow.append(int(prices[1][jindex])*(1-float(col)))
+                    newRow.append(float(prices[1][jindex])*(1-float(col)))
     insert_row(newRow,'prices')
                
+def smallest_sales(product,percentage,data):
+    for i,brand in enumerate(data[0]):
+        if brand==product:
+            indexProduct=i
+    minValue=999999
+    for i,row in enumerate(data):
+        if(i>0):
+            if int(row[indexProduct])<minValue:
+                minValue=int(row[indexProduct])
+                rowMin=i
+    return [data[rowMin][0],minValue]
+                
+
+
+
 
 
 
@@ -74,3 +90,4 @@ def max_demand(data):
 if  __name__=="__main__":
     connect()
     max_demand(data)
+    smSale=smallest_sales("Levi's",0.1,data)
