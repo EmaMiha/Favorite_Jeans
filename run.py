@@ -38,6 +38,13 @@ def connect():
 def insert_row(dataI,worksheet):
 
     wsheet1=SHEET.worksheet(worksheet)
+    pp=wsheet1.get_all_values()
+    for i,row in enumerate(pp):
+        if i>0:
+            if (pp[i][0]==dataI[0]):
+                print(i)
+                wsheet1.delete_rows(i+1)
+                break
     wsheet1.append_row(dataI)
     print(f" New row inserted in {worksheet}!!")
 
