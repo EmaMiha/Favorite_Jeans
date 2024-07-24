@@ -85,6 +85,36 @@ def smallest_sales(product,percentage,data):
                 
 
 
+def descendingOrder(data):
+    sumCol=[]
+    brands=[]
+    a=0
+    for  k in range(len(data)-1):
+        sumCol.append(a)
+    
+    for l,n in enumerate(data[0]):
+        brands.append(n)
+    
+    for i,br in enumerate(data):
+        if i>0:
+            for j,val in enumerate(br):
+                if j>0:
+                    
+                    l=sumCol[j]+int(data[i][j])
+                    sumCol[j]=l
+
+    dictionary=dict()
+
+    for i,brand in enumerate(brands):
+        if (i>0):
+            dictionary[brand]=sumCol[i]
+
+
+    output = dict(sorted(dictionary.items(), key=lambda item: item[1], reverse=True))
+    print(output)
+
+
+
 
 
 
@@ -96,5 +126,6 @@ def smallest_sales(product,percentage,data):
 
 if  __name__=="__main__":
     connect()
-    max_demand(data)
-    smSale=smallest_sales("Levi's",0.1,data)
+    # max_demand(data)
+    # smSale=smallest_sales("Levi's",0.1,data)
+    descendingOrder(data)
