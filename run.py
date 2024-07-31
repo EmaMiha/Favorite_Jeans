@@ -5,6 +5,13 @@
 import gspread
 from google.oauth2.service_account import Credentials
 
+seasons = {
+        "Spring": ["March", "April", "May"],
+        "Summer": ["June", "July", "August"],
+        "Autumn": ["September", "October", "November"],
+        "Winter": ["December", "January", "February"]
+    }
+
 def connect():
     SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -156,7 +163,18 @@ def averagePricePerBrand(brand):
 
 
 
+def sumSeason(season):
 
+    sumS=0
+    for l,month in enumerate(data):
+        if l>0 and month[0] in seasons[season]:
+            for j,d in enumerate(month):
+                if j>0:
+                    sumS=sumS+int(d)
+    print(sumS)
+    
+
+        
 
 
 
@@ -168,4 +186,5 @@ if  __name__=="__main__":
     # max_demand(data)
     # smSale=smallest_sales("Levi's",0.1,data)
     #ascendingOrder(data)
-    averagePricePerBrand("Replay")
+    #averagePricePerBrand("Replay")
+    sumSeason("Spring")
