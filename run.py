@@ -30,10 +30,7 @@ def connect():
     data = sales.get_all_values()
     prices=pr.get_all_values()
     discounts=ds.get_all_values()
-    #print(data)
-    #print(discounts)
-    #print(prices)
-
+  
 
 def insert_row(dataI,worksheet):
 
@@ -114,6 +111,48 @@ def descendingOrder(data):
     print(output)
 
 
+def ascendingOrder(data):
+    sumCol=[]
+    brands=[]
+    a=0
+    for  k in range(len(data)-1):
+        sumCol.append(a)
+    
+    for l,n in enumerate(data[0]):
+        brands.append(n)
+    
+    for i,br in enumerate(data):
+        if i>0:
+            for j,val in enumerate(br):
+                if j>0:
+                    
+                    l=sumCol[j]+int(data[i][j])
+                    sumCol[j]=l
+
+    dictionary=dict()
+
+    for i,brand in enumerate(brands):
+        if (i>0):
+            dictionary[brand]=sumCol[i]
+
+
+    output = dict(sorted(dictionary.items(), key=lambda item: item[1]))
+    print(output)
+
+
+
+def averagePricePerBrand(brand):
+    index=0 
+    for l,name in enumerate(data[0]):
+        if name==brand:
+            index=l
+            break
+    sumP=0
+    for l,n in enumerate(data):
+        if l>0:
+            sumP=sumP+float(data[l][index])*(float(prices[1][index])*(1-float(discounts[l][index])))
+    averageP=sumP/(len(data)-1)
+    print(averageP)
 
 
 
@@ -128,4 +167,5 @@ if  __name__=="__main__":
     connect()
     # max_demand(data)
     # smSale=smallest_sales("Levi's",0.1,data)
-    descendingOrder(data)
+    #ascendingOrder(data)
+    averagePricePerBrand("Replay")
