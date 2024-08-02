@@ -175,6 +175,19 @@ def sumSeason(season):
     
 
         
+def monthly_sales_revenue(avg_sales,full_prices,discounts):
+
+    mr={}
+    for i in range(1,len(avg_sales)):
+        month=avg_sales[i][0]
+        s=0
+        for j in range(1,len(avg_sales[0])):
+            montly_sales=float(avg_sales[i][j])
+            discount=float(discounts[i][j])
+            fullprice_with_discount=float(full_prices[1][j])*(1-discount)
+            s=s+montly_sales*fullprice_with_discount
+        mr[month]=round(s,2)
+    return mr    
 
 
 
@@ -183,8 +196,10 @@ def sumSeason(season):
 
 if  __name__=="__main__":
     connect()
-    # max_demand(data)
-    # smSale=smallest_sales("Levi's",0.1,data)
+    #max_demand(data)
+    #smSale=smallest_sales("Levi's",0.1,data)
     #ascendingOrder(data)
     #averagePricePerBrand("Replay")
-    sumSeason("Spring")
+    #sumSeason("Spring")
+    monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
+    
