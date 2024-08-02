@@ -189,7 +189,10 @@ def monthly_sales_revenue(avg_sales,full_prices,discounts):
         mr[month]=round(s,2)
     return mr    
 
-
+def  maxSaleMonth(m):
+    highest_month=max(m,key=monthly_sales_r.get)
+    highest_revenue=m[highest_month]
+    return highest_month,highest_revenue
 
 
 
@@ -202,4 +205,5 @@ if  __name__=="__main__":
     #averagePricePerBrand("Replay")
     #sumSeason("Spring")
     monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
-    
+    maxS=maxSaleMonth(monthly_sales_r)
+    print(maxS)
