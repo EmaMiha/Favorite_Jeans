@@ -4,6 +4,8 @@
 
 import gspread
 from google.oauth2.service_account import Credentials
+from datetime import datetime
+import sys
 
 seasons = {
         "Spring": ["March", "April", "May"],
@@ -19,7 +21,7 @@ def connect():
     "https://www.googleapis.com/auth/drive"
     ]
     global SHEET
-
+    global time
     global data
     global prices
     global discounts
@@ -31,15 +33,31 @@ def connect():
     sales = SHEET.worksheet('sales')
     pr=SHEET.worksheet('prices')
     ds=SHEET.worksheet('discount')
+    time=datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 
 
     data = sales.get_all_values()
     prices=pr.get_all_values()
     discounts=ds.get_all_values()
-  
 
-def insert_row(dataI,worksheet):
+
+def insert_minsales_row(brand,data):
+    wsheet1=SHEET.worksheet('minsales')
+    newRow=[]
+    newRow.append(brand)
+    text=''
+    for index,month in enumerate(data[0]):
+        text=text+month
+        if index<len(data[0])-1:
+            text=text+","
+    newRow.append(data[1])
+    newRow.append(text)
+    newRow.append(time)
+    wsheet1.append_row(newRow)
+
+
+def insert_price_row(dataI,worksheet):
 
     wsheet1=SHEET.worksheet(worksheet)
     pp=wsheet1.get_all_values()
@@ -73,20 +91,30 @@ def max_demand(data):
             for jindex,col in enumerate(row):
                 if jindex>0:
                     newRow.append(float(prices[1][jindex])*(1-float(col)))
-    insert_row(newRow,'prices')
+    insert_price_row(newRow,'prices')
                
-def smallest_sales(product,percentage,data):
+def min_sales(product,data):
+    
+    product=product.lower()
+    indexProduct=-1
     for i,brand in enumerate(data[0]):
-        if brand==product:
-            indexProduct=i
+        if brand.lower()==product:
+                indexProduct=i
     minValue=999999
+    if indexProduct==-1:
+        raise ValueError("Invalid brand name!!")
     for i,row in enumerate(data):
         if(i>0):
             if int(row[indexProduct])<minValue:
                 minValue=int(row[indexProduct])
                 rowMin=i
-    return [data[rowMin][0],minValue]
-                
+    result=[]           
+    for i,row in enumerate(data):
+        if(i>0):
+            if int(row[indexProduct])==minValue:
+                result.append(row[0])
+    return [result,minValue]
+    
 
 
 def descendingOrder(data):
@@ -200,10 +228,16 @@ def  maxSaleMonth(m):
 if  __name__=="__main__":
     connect()
     #max_demand(data)
-    #smSale=smallest_sales("Levi's",0.1,data)
+    while True:
+        try:
+            brand=input("Enter brand for finding min sales in year")
+            smSale=min_sales(brand,data)
+            insert_minsales_row(brand,smSale)
+        except ValueError as e:
+            print(f"Error: {e} Please Try again!!!")
     #ascendingOrder(data)
     #averagePricePerBrand("Replay")
     #sumSeason("Spring")
-    monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
-    maxS=maxSaleMonth(monthly_sales_r)
-    print(maxS)
+    #monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
+    #maxS=maxSaleMonth(monthly_sales_r)
+
