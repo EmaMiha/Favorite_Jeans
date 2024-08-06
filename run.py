@@ -41,6 +41,19 @@ def connect():
     prices=pr.get_all_values()
     discounts=ds.get_all_values()
 
+def insert_average(price,brand):
+    wsheet1=SHEET.worksheet('average_price')
+    newRow=[]
+    newRow.append('Brand')
+    newRow.append('Avg')
+    wsheet1.append_row(newRow)
+    newRow=[]
+    newRow.append(brand)
+    newRow.append(price)
+    wsheet1.append_row(newRow)
+
+
+
 
 def insert_minsales_row(brand,data):
     wsheet1=SHEET.worksheet('minsales')
@@ -191,18 +204,16 @@ def ascendingOrder(data):
 
 def averagePricePerBrand(brand):
     index=0 
-    print(brand)
-    print('test')
     for l,name in enumerate(data[0]):
         if name==brand:
             index=l
             break
-    print(index)    
+        
     sumP=0
     for l,n in enumerate(data):
         if l>0:
             sumP=sumP+float(data[l][index])*(float(prices[1][index])*(1-float(discounts[l][index])))
-    print(sumP/(len(data)-1))
+    return sumP/(len(data)-1)
     
 
 
@@ -250,7 +261,7 @@ if  __name__=="__main__":
             smSale=min_sales(brand,data)
             insert_minsales_row(brand,smSale)
             insert_order(ascendingOrder(data))
-            #averagePricePerBrand('Diesel')
+            insert_average(averagePricePerBrand(brand),brand)
             #sumSeason("Spring")
             #monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
             #maxS=maxSaleMonth(monthly_sales_r)
