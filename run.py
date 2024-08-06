@@ -56,6 +56,19 @@ def insert_minsales_row(brand,data):
     newRow.append(time)
     wsheet1.append_row(newRow)
 
+def insert_order(data):
+    wsheet1=SHEET.worksheet('ascending_order')
+    newRow=[]
+    newRow.append('Brand')
+    newRow.append('Sum')
+    wsheet1.append_row(newRow)
+    for key,value in data.items():
+        newRow=[]
+        newRow.append(key)
+        newRow.append(value)
+        wsheet1.append_row(newRow)
+
+
 
 def insert_price_row(dataI,worksheet):
 
@@ -171,23 +184,26 @@ def ascendingOrder(data):
             dictionary[brand]=sumCol[i]
 
 
-    output = dict(sorted(dictionary.items(), key=lambda item: item[1]))
-    print(output)
+    return dict(sorted(dictionary.items(), key=lambda item: item[1]))
+    
 
 
 
 def averagePricePerBrand(brand):
     index=0 
+    print(brand)
+    print('test')
     for l,name in enumerate(data[0]):
         if name==brand:
             index=l
             break
+    print(index)    
     sumP=0
     for l,n in enumerate(data):
         if l>0:
             sumP=sumP+float(data[l][index])*(float(prices[1][index])*(1-float(discounts[l][index])))
-    averageP=sumP/(len(data)-1)
-    print(averageP)
+    print(sumP/(len(data)-1))
+    
 
 
 
@@ -230,14 +246,15 @@ if  __name__=="__main__":
     #max_demand(data)
     while True:
         try:
-            brand=input("Enter brand for finding min sales in year")
+            brand=input("Enter brand for statistics")
             smSale=min_sales(brand,data)
             insert_minsales_row(brand,smSale)
+            insert_order(ascendingOrder(data))
+            #averagePricePerBrand('Diesel')
+            #sumSeason("Spring")
+            #monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
+            #maxS=maxSaleMonth(monthly_sales_r)
+            break
         except ValueError as e:
             print(f"Error: {e} Please Try again!!!")
-    #ascendingOrder(data)
-    #averagePricePerBrand("Replay")
-    #sumSeason("Spring")
-    #monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
-    #maxS=maxSaleMonth(monthly_sales_r)
-
+   
