@@ -92,6 +92,21 @@ def insert_minsales_row(brand,data):
     newRow.append(time)
     wsheet1.append_row(newRow)
 
+def insertMaxSaleRevenue(maxS):
+    wsheet1=SHEET.worksheet('revenue_month')
+    wsheet1.clear()
+    newRow=[]
+    if maxS[1]<=0:
+        raise ValueError("No revenue!!")
+    newRow.append('month')
+    newRow.append('SUM')
+    wsheet1.append_row(newRow)
+    newRow=[]
+    newRow.append(maxS[0])
+    newRow.append(maxS[1])
+    wsheet1.append_row(newRow)
+
+
 def insert_order(data):
     wsheet1=SHEET.worksheet('ascending_order')
     newRow=[]
@@ -282,7 +297,7 @@ def  maxSaleMonth(m):
 
 if  __name__=="__main__":
     connect()
-    #max_demand(data)
+    max_demand(data)
     while True:
         try:
             brand=input("Enter brand for statistics")
@@ -292,8 +307,9 @@ if  __name__=="__main__":
             insert_average(averagePricePerBrand(brand),brand)
             season=input("Enter season for summarize:")
             insert_SeasonRes(sumSeason(season),season)
-            #monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
-            #maxS=maxSaleMonth(monthly_sales_r)
+            monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
+            maxS=maxSaleMonth(monthly_sales_r)
+            insertMaxSaleRevenue(maxS)
             break
         except ValueError as e:
             print(f"Error: {e} Please Try again!!!")
