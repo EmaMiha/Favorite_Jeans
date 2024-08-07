@@ -52,12 +52,35 @@ def insert_average(price,brand):
     newRow.append(price)
     wsheet1.append_row(newRow)
 
+def insert_SeasonRes(sumN,season):
+ 
+    wsheet1=SHEET.worksheet('season')
+    wsheet1.clear()
+    newRow=[]
+    if season not in seasons:
+        raise ValueError("Invalid season name!!")
+    newRow.append('season')
+    newRow.append('sum')
+    wsheet1.append_row(newRow)
+    newRow=[]
+    newRow.append(season)
+    newRow.append(sumN)
+    wsheet1.append_row(newRow)
+
+
+
 
 
 
 def insert_minsales_row(brand,data):
     wsheet1=SHEET.worksheet('minsales')
     newRow=[]
+    minValue=999999
+    for i,brand in enumerate(data[0]):
+        if brand.lower()==product:
+            indexProduct=i
+    if indexProduct==-1:
+        raise ValueError("Invalid brand name!!")
     newRow.append(brand)
     text=''
     for index,month in enumerate(data[0]):
@@ -203,6 +226,11 @@ def ascendingOrder(data):
 
 
 def averagePricePerBrand(brand):
+    for i,brand in enumerate(data[0]):
+        if brand.lower()==product:
+                indexProduct=i
+    if indexProduct==-1:
+        raise ValueError("Invalid brand name!!")
     index=0 
     for l,name in enumerate(data[0]):
         if name==brand:
@@ -226,7 +254,7 @@ def sumSeason(season):
             for j,d in enumerate(month):
                 if j>0:
                     sumS=sumS+int(d)
-    print(sumS)
+    return sumS    
     
 
         
@@ -262,7 +290,8 @@ if  __name__=="__main__":
             insert_minsales_row(brand,smSale)
             insert_order(ascendingOrder(data))
             insert_average(averagePricePerBrand(brand),brand)
-            #sumSeason("Spring")
+            season=input("Enter season for summarize:")
+            insert_SeasonRes(sumSeason(season),season)
             #monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
             #maxS=maxSaleMonth(monthly_sales_r)
             break
