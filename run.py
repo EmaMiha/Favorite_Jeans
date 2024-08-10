@@ -43,6 +43,7 @@ def connect():
 
 def insert_average(price,brand):
     wsheet1=SHEET.worksheet('average_price')
+    wsheet1.clear()
     newRow=[]
     newRow.append('Brand')
     newRow.append('Avg')
@@ -76,11 +77,6 @@ def insert_minsales_row(brand,data):
     wsheet1=SHEET.worksheet('minsales')
     newRow=[]
     minValue=999999
-    for i,brand in enumerate(data[0]):
-        if brand.lower()==product:
-            indexProduct=i
-    if indexProduct==-1:
-        raise ValueError("Invalid brand name!!")
     newRow.append(brand)
     text=''
     for index,month in enumerate(data[0]):
@@ -109,6 +105,7 @@ def insertMaxSaleRevenue(maxS):
 
 def insert_order(data):
     wsheet1=SHEET.worksheet('ascending_order')
+    wsheet1.clear()
     newRow=[]
     newRow.append('Brand')
     newRow.append('Sum')
@@ -158,7 +155,8 @@ def max_demand(data):
     insert_price_row(newRow,'prices')
                
 def min_sales(product,data):
-    
+    print(data)
+    print(product)
     product=product.lower()
     indexProduct=-1
     for i,brand in enumerate(data[0]):
@@ -179,37 +177,6 @@ def min_sales(product,data):
                 result.append(row[0])
     return [result,minValue]
     
-
-
-def descendingOrder(data):
-    sumCol=[]
-    brands=[]
-    a=0
-    for  k in range(len(data)-1):
-        sumCol.append(a)
-    
-    for l,n in enumerate(data[0]):
-        brands.append(n)
-    
-    for i,br in enumerate(data):
-        if i>0:
-            for j,val in enumerate(br):
-                if j>0:
-                    
-                    l=sumCol[j]+int(data[i][j])
-                    sumCol[j]=l
-
-    dictionary=dict()
-
-    for i,brand in enumerate(brands):
-        if (i>0):
-            dictionary[brand]=sumCol[i]
-
-
-    output = dict(sorted(dictionary.items(), key=lambda item: item[1], reverse=True))
-    print(output)
-
-
 def ascendingOrder(data):
     sumCol=[]
     brands=[]
@@ -293,24 +260,59 @@ def  maxSaleMonth(m):
     return highest_month,highest_revenue
 
 
+def menu():
+
+    print("--------------------")
+    print("1.Find the month with the highest demand")
+    print("2.Find the lowest sales by brand")
+    print("3.Find item sales in ascending order")
+    print("4.Find the average price by brand")
+    print("5.Find total sales by season")
+    print("6.Find the month with the highest revenue")
+    print("7.Exit")
+    print("----------------------")
+    option=input("Enter number option:")
+    return option
+
 
 
 if  __name__=="__main__":
     connect()
-    max_demand(data)
+
     while True:
         try:
-            brand=input("Enter brand for statistics")
-            smSale=min_sales(brand,data)
-            insert_minsales_row(brand,smSale)
-            insert_order(ascendingOrder(data))
-            insert_average(averagePricePerBrand(brand),brand)
-            season=input("Enter season for summarize:")
-            insert_SeasonRes(sumSeason(season),season)
-            monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
-            maxS=maxSaleMonth(monthly_sales_r)
-            insertMaxSaleRevenue(maxS)
-            break
+            option=menu()
+            if option.isdigit():
+                option=int(option)
+                if option>8 or option<1:
+                    raise ValueError("Invalid option")
+                    continue
+                else:
+                    if option==1:
+                         max_demand(data)
+                    elif option==2:
+                        brand=input("Enter brand for statistics")
+                        smSale=min_sales(brand,data)
+                        insert_minsales_row(brand,smSale)
+                    elif option==3:
+                        insert_order(ascendingOrder(data))
+                    elif option==4:
+                        brand=input("Enter brand for average price")
+                        insert_average(averagePricePerBrand(brand),brand)
+                    elif option==5:
+                        season=input("Enter season for summarize:")
+                        insert_SeasonRes(sumSeason(season),season)
+                    elif option==6:
+                        monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
+                        maxS=maxSaleMonth(monthly_sales_r)
+                        insertMaxSaleRevenue(maxS)
+                    elif option==7:
+                        print("Good bye!")
+                        break
+            else:
+                raise ValueError("Invalid input format")
+                continue       
+        
         except ValueError as e:
             print(f"Error: {e} Please Try again!!!")
    
