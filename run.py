@@ -8,10 +8,10 @@ from datetime import datetime
 import sys
 
 seasons = {
-        "Spring": ["March", "April", "May"],
-        "Summer": ["June", "July", "August"],
-        "Autumn": ["September", "October", "November"],
-        "Winter": ["December", "January", "February"]
+        "spring": ["March", "April", "May"],
+        "summer": ["June", "July", "August"],
+        "autumn": ["September", "October", "November"],
+        "winter": ["December", "January", "February"]
     }
 
 def connect():
@@ -52,6 +52,8 @@ def insert_average(price,brand):
     newRow.append(brand)
     newRow.append(price)
     wsheet1.append_row(newRow)
+    print("Sheet averageprice is filled with data!")
+
 
 def insert_SeasonRes(sumN,season):
  
@@ -67,6 +69,7 @@ def insert_SeasonRes(sumN,season):
     newRow.append(season)
     newRow.append(sumN)
     wsheet1.append_row(newRow)
+    print("Sheet seasons is filled with data!")
 
 
 
@@ -87,6 +90,7 @@ def insert_minsales_row(brand,data):
     newRow.append(text)
     newRow.append(time)
     wsheet1.append_row(newRow)
+    print("Sheet minsales is filled with data!")
 
 def insertMaxSaleRevenue(maxS):
     wsheet1=SHEET.worksheet('revenue_month')
@@ -101,6 +105,8 @@ def insertMaxSaleRevenue(maxS):
     newRow.append(maxS[0])
     newRow.append(maxS[1])
     wsheet1.append_row(newRow)
+    print("Sheet revenue.month is filled with data!")
+
 
 
 def insert_order(data):
@@ -115,6 +121,7 @@ def insert_order(data):
         newRow.append(key)
         newRow.append(value)
         wsheet1.append_row(newRow)
+    print("Sheet ascendind_order is filled with data!")
 
 
 
@@ -125,7 +132,6 @@ def insert_price_row(dataI,worksheet):
     for i,row in enumerate(pp):
         if i>0:
             if (pp[i][0]==dataI[0]):
-                print(i)
                 wsheet1.delete_rows(i+1)
                 break
     wsheet1.append_row(dataI)
@@ -155,8 +161,6 @@ def max_demand(data):
     insert_price_row(newRow,'prices')
                
 def min_sales(product,data):
-    print(data)
-    print(product)
     product=product.lower()
     indexProduct=-1
     for i,brand in enumerate(data[0]):
@@ -207,9 +211,11 @@ def ascendingOrder(data):
 
 
 
-def averagePricePerBrand(brand):
+def averagePricePerBrand(product):
+    indexProduct=-1
     for i,brand in enumerate(data[0]):
-        if brand.lower()==product:
+        
+        if brand.lower()==product.lower():
                 indexProduct=i
     if indexProduct==-1:
         raise ValueError("Invalid brand name!!")
@@ -223,16 +229,14 @@ def averagePricePerBrand(brand):
     for l,n in enumerate(data):
         if l>0:
             sumP=sumP+float(data[l][index])*(float(prices[1][index])*(1-float(discounts[l][index])))
-    return sumP/(len(data)-1)
-    
-
+    return round((sumP/(len(data)-1)),2)
 
 
 def sumSeason(season):
 
     sumS=0
     for l,month in enumerate(data):
-        if l>0 and month[0] in seasons[season]:
+        if l>0 and month[0] in seasons[season.lower()]:
             for j,d in enumerate(month):
                 if j>0:
                     sumS=sumS+int(d)
@@ -309,6 +313,7 @@ if  __name__=="__main__":
                     elif option==7:
                         print("Good bye!")
                         break
+                    input("Enter for continue!")
             else:
                 raise ValueError("Invalid input format")
                 continue       
