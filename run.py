@@ -52,7 +52,7 @@ def insert_average(price,brand):
     newRow.append(brand)
     newRow.append(price)
     wsheet1.append_row(newRow)
-    print("Sheet averageprice is filled with data!")
+    print("Sheet average_price is filled with data!")
 
 
 def insert_SeasonRes(sumN,season):
@@ -69,7 +69,7 @@ def insert_SeasonRes(sumN,season):
     newRow.append(season)
     newRow.append(sumN)
     wsheet1.append_row(newRow)
-    print("Sheet seasons is filled with data!")
+    print("Sheet season is filled with data!")
 
 
 
@@ -105,7 +105,7 @@ def insertMaxSaleRevenue(maxS):
     newRow.append(maxS[0])
     newRow.append(maxS[1])
     wsheet1.append_row(newRow)
-    print("Sheet revenue.month is filled with data!")
+    print("Sheet revenue_month is filled with data!")
 
 
 
@@ -121,7 +121,7 @@ def insert_order(data):
         newRow.append(key)
         newRow.append(value)
         wsheet1.append_row(newRow)
-    print("Sheet ascendind_order is filled with data!")
+    print("Sheet ascending_order is filled with data!")
 
 
 
