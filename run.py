@@ -275,7 +275,7 @@ def menu():
     print("6.Find the month with the highest revenue")
     print("7.Exit")
     print("----------------------")
-    option=input("Enter number option:")
+    option=input("Enter number option:\n")
     return option
 
 
@@ -295,16 +295,16 @@ if  __name__=="__main__":
                     if option==1:
                          max_demand(data)
                     elif option==2:
-                        brand=input("Enter brand for statistics")
+                        brand=input("Enter brand for statistics:\n")
                         smSale=min_sales(brand,data)
                         insert_minsales_row(brand,smSale)
                     elif option==3:
                         insert_order(ascendingOrder(data))
                     elif option==4:
-                        brand=input("Enter brand for average price")
+                        brand=input("Enter brand for average price:\n")
                         insert_average(averagePricePerBrand(brand),brand)
                     elif option==5:
-                        season=input("Enter season for summarize:")
+                        season=input("Enter season for summarize:\n")
                         insert_SeasonRes(sumSeason(season),season)
                     elif option==6:
                         monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
@@ -313,7 +313,7 @@ if  __name__=="__main__":
                     elif option==7:
                         print("Good bye!")
                         break
-                    input("Enter for continue!")
+                    input("Enter for continue!\n")
             else:
                 raise ValueError("Invalid input format")
                 continue       
