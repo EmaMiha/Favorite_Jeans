@@ -289,7 +289,7 @@ if  __name__=="__main__":
             if option.isdigit():
                 option=int(option)
                 if option>8 or option<1:
-                    raise ValueError("Invalid option")
+                    raise ValueError("Invalid option.")
                     continue
                 else:
                     if option==1:
@@ -315,7 +315,7 @@ if  __name__=="__main__":
                         break
                     input("Enter for continue!\n")
             else:
-                raise ValueError("Invalid input format")
+                raise ValueError("Invalid input format.")
                 continue       
         
         except ValueError as e:
