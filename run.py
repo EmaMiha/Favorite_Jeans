@@ -61,7 +61,7 @@ def insert_SeasonRes(sumN,season):
     wsheet1.clear()
     newRow=[]
     if season not in seasons:
-        raise ValueError("Invalid season name!!")
+        raise ValueError("Invalid season name!")
     newRow.append('season')
     newRow.append('sum')
     wsheet1.append_row(newRow)
@@ -168,7 +168,7 @@ def min_sales(product,data):
                 indexProduct=i
     minValue=999999
     if indexProduct==-1:
-        raise ValueError("Invalid brand name!!")
+        raise ValueError("Invalid brand name!")
     for i,row in enumerate(data):
         if(i>0):
             if int(row[indexProduct])<minValue:
@@ -218,7 +218,7 @@ def averagePricePerBrand(product):
         if brand.lower()==product.lower():
                 indexProduct=i
     if indexProduct==-1:
-        raise ValueError("Invalid brand name!!")
+        raise ValueError("Invalid brand name!")
     index=0 
     for l,name in enumerate(data[0]):
         if name==brand:
@@ -304,14 +304,15 @@ if  __name__=="__main__":
                         brand=input("Enter brand for average price:\n")
                         insert_average(averagePricePerBrand(brand),brand)
                     elif option==5:
-                        season=input("Enter season for summarize:\n")
+                        season=input("Enter season for summarize:\n").lower()
+                        
                         insert_SeasonRes(sumSeason(season),season)
                     elif option==6:
                         monthly_sales_r=monthly_sales_revenue(data,prices,discounts)
                         maxS=maxSaleMonth(monthly_sales_r)
                         insertMaxSaleRevenue(maxS)
                     elif option==7:
-                        print("Good bye!")
+                        print("Goodbye!")
                         break
                     input("Enter for continue!\n")
             else:
@@ -319,5 +320,5 @@ if  __name__=="__main__":
                 continue       
         
         except ValueError as e:
-            print(f"Error: {e} Please Try again!!!")
+            print(f"Error: {e} Please Try Again!")
    
