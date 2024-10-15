@@ -88,7 +88,7 @@ def insertMaxSaleRevenue(maxS):
     wsheet1 = SHEET.worksheet('revenue_month')
     wsheet1.clear()
     newRow = []
-    if maxS[1] < =0:
+    if maxS[1] <=0:
         raise ValueError("No revenue!!")
     newRow.append('month')
     newRow.append('SUM')

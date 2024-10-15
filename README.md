@@ -109,8 +109,20 @@ M&M agency offers valuable research services to clients, aiding them in making i
 
 ▪︎ I have manually tasted the project in my local terminal and the Code Institute Heroku terminal, there were no a problems. 
 
-▪︎ When I passed the code through CI Python Linter , there were some errors like: 
+▪︎ When I passed the code through CI Python Linter , there were 2 errors: 
+  E741 ambiguous variable name, which I fixed it and E501 line too long, it's still there.
 
 
+#### Bugs
+
+###### ▪︎ Solved bugs
+
+    ▫︎ There was an issue with deployment. I noticed that "pip3 freeze > requirements.txt" was spelled wrong.
+
+###### ▪︎ Unsolved bugs
+
+    ▫︎ No remaining bugs. 
+
+   
 
 
