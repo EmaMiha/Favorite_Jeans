@@ -105,7 +105,11 @@ M&M agency offers valuable research services to clients, aiding them in making i
 
 ![project_image](assets/p8.png)
 
+## Testing
 
+▪︎ I have manually tasted the project in my local terminal and the Code Institute Heroku terminal, there were no a problems. 
+
+▪︎ When I passed the code through CI Python Linter , there were some errors like: 
 
 
 

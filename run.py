@@ -180,15 +180,15 @@ def ascendingOrder(data):
     for k in range(len(data)-1):
         sumCol.append(a)
 
-    for l, n in enumerate(data[0]):
+    for e, n in enumerate(data[0]):
         brands.append(n)
 
     for i, br in enumerate(data):
         if i > 0:
             for j, val in enumerate(br):
                 if j > 0:  
-                    l = sumCol[j]+int(data[i][j])
-                    sumCol[j] = l
+                    e = sumCol[j]+int(data[i][j])
+                    sumCol[j] = e
 
     dictionary = dict()
 
@@ -206,22 +206,22 @@ def averagePricePerBrand(product):
     if indexProduct == -1:
         raise ValueError("Invalid brand name!")
     index = 0 
-    for l, name in enumerate(data[0]):
+    for e, name in enumerate(data[0]):
         if name == brand:
-            index = l
+            index = e
             break    
     sumP = 0
-    for l, n in enumerate(data):
-        if l > 0:
-            sumP = sumP+float(data[l][index])*(float(prices[1][index])*(1-float(discounts[l][index])))
+    for e, n in enumerate(data):
+        if e > 0:
+            sumP = sumP+float(data[e][index])*(float(prices[1][index])*(1-float(discounts[e][index])))            
     return round((sumP/(len(data)-1)), 2)
 
 
 def sumSeason(season):
 
     sumS = 0
-    for l, month in enumerate(data):
-        if l > 0 and month[0] in seasons[season.lower()]:
+    for e, month in enumerate(data):
+        if e > 0 and month[0] in seasons[season.lower()]:
             for j, d in enumerate(month):
                 if j > 0:
                     sumS = sumS+int(d)
